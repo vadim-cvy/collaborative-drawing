@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+import Tools from '@/components/tools/Tools.vue';
+</script>
+
 <template>
   <header>
     <h1>
@@ -11,25 +15,10 @@
   </main>
 
   <aside>
-    <div>
-      <ul>
-        <li>tool</li>
-        <li>tool</li>
-      </ul>
+    <Tools></Tools>
 
-      <ul>
-        <li>selected tool setting</li>
-        <li>selected tool setting</li>
-      </ul>
-
-      <ul>
-        <li>selected tool color 1</li>
-        <li>selected tool color 2</li>
-      </ul>
-    </div>
-
-    <div>
+    <section>
       board
-    </div>
+    </section>
   </aside>
 </template>
