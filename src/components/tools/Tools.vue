@@ -4,18 +4,18 @@ import Pencil from '@/inc/tools/Pencil';
 import Tool from '@/inc/tools/Tool';
 import { ref, watch } from 'vue';
 
+const emit = defineEmits<{
+  (e: 'activeToolUpdated', tool: Tool): void
+}>()
+
 const tools: Tool[] = [
   new Pencil(),
   new Line(),
 ]
 
-const selectedTool = ref( tools[0] )
+const activeTool = ref( tools[0] )
 
-watch( selectedTool, ( newTool, oldTool ) =>
-{
-  oldTool.isSelected = false
-  newTool.isSelected = true
-})
+watch( activeTool, tool => emit( 'activeToolUpdated', tool ) )
 </script>
 
 <template>
@@ -24,14 +24,14 @@ watch( selectedTool, ( newTool, oldTool ) =>
       <li
         v-for="(tool, i) in tools"
         :key="i"
-        @click="selectedTool = tool"
+        @click="activeTool = tool"
       >
         {{ tool.label }}
       </li>
     </ul>
 
     <ul>
-      <li v-for="setting in selectedTool.settings" :key="setting.label">
+      <li v-for="setting in activeTool.settings" :key="setting.label">
         {{ setting.label }}
 
         <select v-model="setting.selectedOption">

@@ -1,5 +1,10 @@
 <script lang="ts" setup>
 import Tools from '@/components/tools/Tools.vue';
+import Board from '@/components/board/Board.vue';
+import { ref } from 'vue';
+import Tool from './inc/tools/Tool';
+
+const activeTool = ref<Tool>()
 </script>
 
 <template>
@@ -15,10 +20,8 @@ import Tools from '@/components/tools/Tools.vue';
   </main>
 
   <aside>
-    <Tools></Tools>
+    <Tools @active-tool-updated="tool => activeTool = tool"></Tools>
 
-    <section>
-      board
-    </section>
+    <Board v-if="activeTool" :active-tool="activeTool"></Board>
   </aside>
 </template>
