@@ -1,5 +1,5 @@
 import Tool from "../../tools/Tool"
-import Layer from "../Layer"
+import Layer from "../layer/Layer"
 import Canvas from "./Canvas"
 import MouseRelPosition from "./mouse/MouseRelPosition"
 import tMouseEventType from "./mouse/tMouseEventType"
