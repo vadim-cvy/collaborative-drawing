@@ -35,14 +35,9 @@ export default class TopLayerCanvas extends Canvas
 
   protected onMouseEvent( e: MouseEvent, type: tMouseEventType )
   {
-    const mouseRelPosition = new MouseRelPosition( e.clientX, e.clientY, this.element )
-
     if ( ! this.layer && type === 'down' )
     {
-      this.addLayer(new Layer(
-        mouseRelPosition.x,
-        mouseRelPosition.y
-      ))
+      this.addLayer( new Layer() )
     }
 
     if ( ! this.layer )
@@ -50,7 +45,15 @@ export default class TopLayerCanvas extends Canvas
       return
     }
 
-    this.activeTool.maybeUpdateLayerOnMouseEvent( type, mouseRelPosition, this.layer )
+    const mouseRelPosition = new MouseRelPosition(
+      e.clientX,
+      e.clientY,
+      this.element.offsetLeft,
+      this.element.offsetTop,
+      this.cssSizeScale
+    )
+
+    this.layer.onMouseEvent( type, mouseRelPosition, this.activeTool )
 
     if ( type === 'up' )
     {
@@ -77,8 +80,6 @@ export default class TopLayerCanvas extends Canvas
 
     this.bottomLayersCanvas.addLayer( this.layer )
 
-    // todo: clear canvas rect
-
-    this.layers.splice( 0, this.layers.length )
+    this.removeLayer( 0 )
   }
 }

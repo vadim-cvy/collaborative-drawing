@@ -1,10 +1,16 @@
+import Tool from "../tools/Tool";
+import MouseRelPosition from "./canvas/mouse/MouseRelPosition";
+import tMouseEventType from "./canvas/mouse/tMouseEventType";
+
 export default class Layer
 {
-  public constructor(
-    protected initialPathX: number,
-    protected initialPathY: number
-  )
+  public onMouseEvent( e: tMouseEventType, cursor: MouseRelPosition, tool: Tool )
   {
-    // todo: set "create path" action with initial points
+    // todo: maybe add new action or update prev actions and their props
+  }
+
+  public render( ctx: CanvasRenderingContext2D )
+  {
+    // todo: implement
   }
 }
