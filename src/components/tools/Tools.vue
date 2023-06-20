@@ -1,21 +1,33 @@
 <script lang="ts" setup>
+import DrawingBoard from '@/inc/drawing/DrawingBoard';
 import Line from '@/inc/tools/Line';
 import Pencil from '@/inc/tools/Pencil';
 import Tool from '@/inc/tools/Tool';
 import { ref, watch } from 'vue';
 
-const emit = defineEmits<{
-  (e: 'activeToolUpdated', tool: Tool): void
+const props = defineProps<{
+  drawingBoard: DrawingBoard
 }>()
 
 const tools: Tool[] = [
-  new Pencil(),
-  new Line(),
+  new Pencil( props.drawingBoard ),
+  new Line( props.drawingBoard ),
 ]
 
 const activeTool = ref( tools[0] )
 
-watch( activeTool, tool => emit( 'activeToolUpdated', tool ) )
+watch( activeTool,
+  ( newTool, oldTool ) =>
+  {
+    if ( oldTool )
+    {
+      oldTool.isSelected = false
+    }
+
+    newTool.isSelected = true
+  },
+  { immediate: true }
+)
 </script>
 
 <template>

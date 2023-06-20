@@ -1,9 +1,10 @@
-import Layer from "../layer/Layer"
+import Command from "./commands/Command"
+import tCoord from "./tCoord"
 
 export default class Canvas
 {
   public constructor(
-    protected readonly element: HTMLCanvasElement
+    public readonly element: HTMLCanvasElement
   )
   {
     element.width = this.resolution.width
@@ -17,8 +18,6 @@ export default class Canvas
     width: 1360,
     height: 768,
   }
-
-  protected readonly layers: Layer[] = []
 
   protected _cssSizeScale?: number
 
@@ -52,28 +51,14 @@ export default class Canvas
     return ctx
   }
 
-  public addLayer( layer: Layer )
+  public clear()
   {
-    this.layers.push( layer )
-
-    layer.render( this.ctx )
-  }
-
-  public getLayer( index: number ) : Layer | undefined
-  {
-    return this.layers[ index ]
-  }
-
-  public removeLayer( index: number )
-  {
-    if ( ! this.getLayer( index ) )
-    {
-      throw new Error( `Layer i:${index} is not set!` )
-    }
-
-    this.layers.splice( index, 1 )
-
     this.ctx.clearRect( 0, 0, this.resolution.width, this.resolution.height )
+  }
+
+  public draw( command: Command )
+  {
+    command.do( this.ctx )
   }
 
   public setCssSize( cssMaxWidth: number, cssMaxHeight: number )
@@ -88,5 +73,13 @@ export default class Canvas
       cssMaxWidth / this.resolution.width
 
     this.cssSizeScale = Number( cssSizeScale.toFixed( 2 ) )
+  }
+
+  public getCursorRelativeCoord( originalMouseCoord: tCoord ) : tCoord
+  {
+    return {
+      x: ( originalMouseCoord.x - this.element.offsetLeft ) * this.cssSizeScale,
+      y: ( originalMouseCoord.y - this.element.offsetTop ) * this.cssSizeScale,
+    }
   }
 }

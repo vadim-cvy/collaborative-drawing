@@ -1,42 +1,36 @@
 <script setup lang="ts">
-import Canvas from '@/inc/drawing/canvas/Canvas';
-import TopLayerCanvas from '@/inc/drawing/canvas/TopLayerCanvas';
-import Tool from '@/inc/tools/Tool';
+import DrawingBoard from '@/inc/drawing/DrawingBoard';
 import { onMounted, ref, watch } from 'vue';
 
-const props = defineProps<{
-  activeTool: Tool
+const emit = defineEmits<{
+  (e: 'drawingBoardInited', drawingBoard: DrawingBoard): void
 }>()
 
 const
-  bottomLayersCanvasElement = ref<HTMLCanvasElement>(),
-  topLayerCanvasElement = ref<HTMLCanvasElement>()
+  underlyingCanvasElement = ref<HTMLCanvasElement>(),
+  topCanvasElement = ref<HTMLCanvasElement>()
 
 onMounted(() =>
 {
-  if ( ! bottomLayersCanvasElement.value )
+  if ( ! underlyingCanvasElement.value )
   {
     throw new Error( 'Bottom layers canvas element is not set!' )
   }
 
-  if ( ! topLayerCanvasElement.value )
+  if ( ! topCanvasElement.value )
   {
     throw new Error( 'Top layer canvas element is not set!' )
   }
 
-  const topLayerCanvas = new TopLayerCanvas(
-    topLayerCanvasElement.value,
-    new Canvas( bottomLayersCanvasElement.value ),
-    props.activeTool,
-  )
+  const drawingBoard = new DrawingBoard( topCanvasElement.value, underlyingCanvasElement.value )
 
-  watch( () => props.activeTool, tool => topLayerCanvas.activeTool = tool )
+  emit( 'drawingBoardInited', drawingBoard )
 })
 </script>
 
 <template>
   <section>
-    <canvas ref="bottomLayersCanvasElement"></canvas>
-    <canvas ref="topLayerCanvasElement"></canvas>
+    <canvas ref="underlyingCanvasElement"></canvas>
+    <canvas ref="topCanvasElement"></canvas>
   </section>
 </template>

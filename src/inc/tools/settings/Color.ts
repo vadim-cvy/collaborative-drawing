@@ -2,7 +2,7 @@ import Setting from "./Setting"
 
 export default class Color extends Setting
 {
-  public constructor( hasTrasparent = false )
+  public constructor( hasTrasparent = false, label: string = 'Color' )
   {
     const options: Color['options'] = [
       {
@@ -23,6 +23,6 @@ export default class Color extends Setting
       })
     }
 
-    super( 'Color', options )
+    super( label, options )
   }
 }

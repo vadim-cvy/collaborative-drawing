@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import Tools from '@/components/tools/Tools.vue';
 import Board from '@/components/board/Board.vue';
+import DrawingBoard from './inc/drawing/DrawingBoard';
 import { ref } from 'vue';
-import Tool from './inc/tools/Tool';
 
-const activeTool = ref<Tool>()
+const drawingBoard = ref<DrawingBoard>()
 </script>
 
 <template>
@@ -20,8 +20,8 @@ const activeTool = ref<Tool>()
   </main>
 
   <aside>
-    <Tools @active-tool-updated="tool => activeTool = tool"></Tools>
+    <Board @drawing-board-inited="board => drawingBoard = board"></Board>
 
-    <Board v-if="activeTool" :active-tool="activeTool"></Board>
+    <Tools v-if="drawingBoard" :drawing-board="drawingBoard"></Tools>
   </aside>
 </template>
