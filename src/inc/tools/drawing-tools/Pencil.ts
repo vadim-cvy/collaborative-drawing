@@ -25,7 +25,7 @@ export default class Pencil extends DrawingTool
 
     if ( isDot )
     {
-      this.commands.push( new CommandArc( cursorPosition, this.settings.lineWidth.selectedOption ) )
+      this.commands.push( new CommandArc( cursorPosition ) )
 
       return
     }
