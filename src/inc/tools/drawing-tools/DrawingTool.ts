@@ -13,7 +13,9 @@ export default abstract class DrawingTool extends Tool
 {
   public readonly settings = {
     strokeStlye: new Color( 'Color', selectedColor => new CommandStrokeStyle( selectedColor ) ),
-    lineWidth: new Size( 'Size', selectedWidth => new CommandLineWidth( selectedWidth ) ),
+
+    lineWidth: new Size( 'Size', selectedWidth => new CommandLineWidth( selectedWidth ),
+      1, 10 ),
   }
 
   protected createCommandsSet( commands: iCommand[] )
