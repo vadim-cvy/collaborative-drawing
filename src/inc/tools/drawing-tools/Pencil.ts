@@ -1,8 +1,8 @@
-import CommandLineTo from "../../drawing-board/commands/path/CommandLineTo";
-import CommandMoveTo from "../../drawing-board/commands/path/CommandMoveTo";
-import CommandQuadraticCurveTo from "../../drawing-board/commands/path/CommandQuadraticCurveTo";
-import CommandArc from "../../drawing-board/commands/path/CommandArc";
-import tCoord from "../../drawing-board/tCoord";
+import CommandLineTo from "../../board/commands/path/CommandLineTo";
+import CommandMoveTo from "../../board/commands/path/CommandMoveTo";
+import CommandQuadraticCurveTo from "../../board/commands/path/CommandQuadraticCurveTo";
+import CommandArc from "../../board/commands/path/CommandArc";
+import tCoord from "../../board/tCoord";
 import DrawingTool from "./DrawingTool";
 
 export default class Pencil extends DrawingTool

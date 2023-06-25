@@ -1,4 +1,4 @@
-import tCoord from "@/inc/drawing-board/tCoord";
+import tCoord from "@/inc/board/tCoord";
 import Command from "../Command";
 
 export default abstract class CoordCommand extends Command

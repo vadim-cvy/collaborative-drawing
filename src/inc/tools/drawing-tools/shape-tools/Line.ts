@@ -1,6 +1,6 @@
-import CommandLineTo from "@/inc/drawing-board/commands/path/CommandLineTo";
-import tMouseEventType from "@/inc/drawing-board/mouse/tMouseEventType";
-import tCoord from "@/inc/drawing-board/tCoord";
+import CommandLineTo from "@/inc/board/commands/path/CommandLineTo";
+import tMouseEventType from "@/inc/board/mouse/tMouseEventType";
+import tCoord from "@/inc/board/tCoord";
 import ShapeTool from "./ShapeTool";
 
 export default class Line extends ShapeTool

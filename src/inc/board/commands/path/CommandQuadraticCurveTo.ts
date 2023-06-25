@@ -1,4 +1,4 @@
-import tCoord from "@/inc/drawing-board/tCoord";
+import tCoord from "@/inc/board/tCoord";
 import CoordCommand from "./CoordCommand";
 
 export default class CommandQuadraticCurveTo extends CoordCommand
