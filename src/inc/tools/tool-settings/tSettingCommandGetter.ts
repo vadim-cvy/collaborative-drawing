@@ -1,4 +1,4 @@
-import iCommand from "@/inc/drawing/commands/iCommand";
+import iCommand from "@/inc/drawing-board/commands/iCommand";
 
 type tSettingCommandGetter<T> = ( selectedOptionValue: T ) => iCommand
 

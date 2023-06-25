@@ -1,4 +1,4 @@
-import tCoord from "@/inc/drawing/tCoord";
+import tCoord from "@/inc/drawing-board/tCoord";
 import DrawingTool from "../DrawingTool";
 
 export default abstract class ShapeTool extends DrawingTool

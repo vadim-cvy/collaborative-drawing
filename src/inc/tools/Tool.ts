@@ -1,9 +1,9 @@
-import iCommand from "../drawing/commands/iCommand";
-import CommandsSet from "../drawing/commands/CommandsSet";
-import CoordCommand from "../drawing/commands/path/CoordCommand";
-import DrawingBoard from "../drawing/DrawingBoard";
-import tMouseEventType from "../drawing/mouse/tMouseEventType";
-import tCoord from "../drawing/tCoord";
+import iCommand from "../drawing-board/commands/iCommand";
+import CommandsSet from "../drawing-board/commands/CommandsSet";
+import CoordCommand from "../drawing-board/commands/path/CoordCommand";
+import DrawingBoard from "../drawing-board/DrawingBoard";
+import tMouseEventType from "../drawing-board/mouse/tMouseEventType";
+import tCoord from "../drawing-board/tCoord";
 import tSettings from "./tool-settings/tSettings";
 
 export default abstract class Tool
