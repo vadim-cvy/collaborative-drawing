@@ -2,7 +2,7 @@ import Setting from "./Setting"
 
 export default class Color extends Setting
 {
-  public constructor( hasTrasparent = false, label: string = 'Color' )
+  public constructor( label: string, hasTrasparent = false )
   {
     const options: Color['options'] = [
       {

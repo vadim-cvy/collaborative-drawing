@@ -2,7 +2,7 @@ import Setting from "./Setting"
 
 export default class Size extends Setting
 {
-  public constructor( from = 1, to = 10 )
+  public constructor( label: string, from = 1, to = 10 )
   {
     const options: Size['options'] = []
 
@@ -14,6 +14,6 @@ export default class Size extends Setting
       })
     }
 
-    super( 'Size', options )
+    super( label, options )
   }
 }

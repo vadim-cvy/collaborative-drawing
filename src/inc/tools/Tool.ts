@@ -1,27 +1,52 @@
 import Command from "../drawing/commands/Command";
-import PathSubCommandMoveTo from "../drawing/commands/path/sub-commands/PathSubCommandMoveTo";
+import CoordCommand from "../drawing/commands/path/sub-commands/CoordCommand";
 import DrawingBoard from "../drawing/DrawingBoard";
 import tMouseEventType from "../drawing/mouse/tMouseEventType";
 import tCoord from "../drawing/tCoord";
-import Setting from "./settings/Setting"
-import tUpdateToolCommandMouseEventType from "./tUpdateToolCommandMouseEventType";
+import tSettings from "./tool-settings/tSettings";
 
 export default abstract class Tool
 {
   public constructor(
-    public readonly label: string,
-    protected readonly drawingBoard: DrawingBoard,
-    public readonly settings: Setting[],
+    protected readonly drawingBoard: DrawingBoard
   )
   {
     drawingBoard.mouseEventsListeners.push( ( type, cursorPosition ) => this.onMouseEvent( type, cursorPosition ) )
   }
 
+  public abstract readonly label: string
+
+  public abstract readonly settings: tSettings
+
   public isSelected = false
 
-  protected abstract readonly command: Command
+  protected get wrapperCommand()
+  {
+    const wrapperCommand = this.createWrapperCommandInstance()
 
-  protected mouseEventCursorLastPosition?: tCoord
+    // todo: populate with settings commands
+
+    this.commands.forEach( command => wrapperCommand.subCommands.push( command ) )
+
+    return wrapperCommand
+  }
+
+  protected abstract commands: Command[]
+
+  protected get lastCommand()
+  {
+    return this.commands[ this.commands.length - 1 ]
+  }
+
+  protected get lastCoord()
+  {
+    if ( ! ( this.lastCommand instanceof CoordCommand ) )
+    {
+      return false
+    }
+
+    return this.lastCommand.coord
+  }
 
   protected onMouseEvent( type: tMouseEventType, cursorPosition: tCoord )
   {
@@ -30,48 +55,53 @@ export default abstract class Tool
       return
     }
 
+    this.updateCommandsOnMouseEvent( type, cursorPosition )
+
+    if ( type === 'up' )
+    {
+      this.drawingBoard.drawPersistant( this.wrapperCommand )
+
+      this.commands = []
+    }
+    else
+    {
+      this.drawingBoard.drawTmp( this.wrapperCommand )
+    }
+  }
+
+  protected updateCommandsOnMouseEvent( type: tMouseEventType, cursorPosition: tCoord )
+  {
     if ( type === 'down' )
     {
-      this.setInitialSubCommands( cursorPosition )
+      this.updateCommandsOnDrawingStart( cursorPosition )
 
       return
     }
 
-    this.updateCommandOnMouseEvent( type, cursorPosition, this.isCursorPositionChanged( cursorPosition ) )
+    if ( ! this.lastCoord )
+    {
+      throw new Error( 'Something goes wrong!' )
+    }
+
+    const isCursorPositionChanged =
+      this.lastCoord.x !== cursorPosition.x &&
+      this.lastCoord.y !== cursorPosition.y
 
     if ( type === 'up' )
     {
-      this.drawingBoard.drawPersistant( this.command )
-
-      this.command.subCommands.splice( 0, this.command.subCommands.length )
-
-      this.mouseEventCursorLastPosition = undefined
+      this.updateCommandsOnDrawingEnd( cursorPosition, isCursorPositionChanged )
     }
-    else
+    else if ( isCursorPositionChanged )
     {
-      this.drawingBoard.drawTmp( this.command )
-
-      this.mouseEventCursorLastPosition = cursorPosition
+      this.updateCommandsOnDrawingContinue( cursorPosition, type )
     }
   }
 
-  protected isCursorPositionChanged( curPosition: tCoord )
-  {
-    const prevPosition = this.mouseEventCursorLastPosition
+  protected abstract updateCommandsOnDrawingStart( cursorPosition: tCoord ) : void
 
-    if ( ! prevPosition )
-    {
-      return true
-    }
+  protected abstract updateCommandsOnDrawingContinue( cursorPosition: tCoord, eventType: tMouseEventType ) : void
 
-    return prevPosition.x !== curPosition.x && prevPosition.y !== curPosition.y
-  }
+  protected abstract updateCommandsOnDrawingEnd( cursorPosition: tCoord, isCursorPositionChanged: boolean ) : void
 
-  protected abstract setInitialSubCommands( cursorPosition: tCoord ) : void
-
-  protected abstract updateCommandOnMouseEvent(
-    type: tUpdateToolCommandMouseEventType,
-    cursorPosition: tCoord,
-    isCursorPositionChanged: boolean
-  ) : void
+  protected abstract createWrapperCommandInstance() : Command
 }
