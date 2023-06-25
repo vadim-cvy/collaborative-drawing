@@ -1,6 +1,5 @@
-import Tool from "../tools/Tool"
 import Canvas from "./Canvas"
-import Command from "./commands/Command"
+import CommandsSet from "./commands/CommandsSet"
 import tMouseEventListenerCb from "./mouse/tMouseEventListenerCb"
 import tMouseEventType from "./mouse/tMouseEventType"
 
@@ -46,17 +45,17 @@ export default class DrawingBoard
     this.mouseEventsListeners.forEach( cb => cb( type, cursorPosition ) )
   }
 
-  public drawPersistant( command: Command )
+  public drawPersistant( commands: CommandsSet )
   {
     this.tmpDrawingCanvas.clear()
 
-    this.persistantDrawingCanvas.draw( command )
+    this.persistantDrawingCanvas.draw( commands )
   }
 
-  public drawTmp( command: Command )
+  public drawTmp( commands: CommandsSet )
   {
     this.tmpDrawingCanvas.clear()
 
-    this.tmpDrawingCanvas.draw( command )
+    this.tmpDrawingCanvas.draw( commands )
   }
 }

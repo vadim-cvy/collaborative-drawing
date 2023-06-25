@@ -1,9 +1,6 @@
-export default abstract class Command
-{
-  public readonly subCommands: Command[] = []
+import iCommand from "./iCommand";
 
-  public do( ctx: CanvasRenderingContext2D )
-  {
-    this.subCommands.forEach( subCommand => subCommand.do( ctx ) )
-  }
+export default abstract class implements iCommand
+{
+  public abstract do( ctx: CanvasRenderingContext2D ) : void
 }

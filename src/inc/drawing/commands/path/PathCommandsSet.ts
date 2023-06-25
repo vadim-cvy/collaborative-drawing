@@ -1,7 +1,7 @@
-import Command from "../Command";
+import CommandsSet from "../CommandsSet";
 
 // todo (future): implement the same but for transformation (select rect then move/resize)
-export default class CommandCreatePath extends Command
+export default class PathCommandsSet extends CommandsSet
 {
   public do( ctx: CanvasRenderingContext2D )
   {

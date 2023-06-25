@@ -1,4 +1,3 @@
-import tMouseEventType from "@/inc/drawing/mouse/tMouseEventType";
 import tCoord from "@/inc/drawing/tCoord";
 import DrawingTool from "../DrawingTool";
 

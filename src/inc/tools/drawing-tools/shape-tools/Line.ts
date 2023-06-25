@@ -1,4 +1,4 @@
-import CommandLineTo from "@/inc/drawing/commands/path/sub-commands/CommandLineTo";
+import CommandLineTo from "@/inc/drawing/commands/path/CommandLineTo";
 import tMouseEventType from "@/inc/drawing/mouse/tMouseEventType";
 import tCoord from "@/inc/drawing/tCoord";
 import ShapeTool from "./ShapeTool";

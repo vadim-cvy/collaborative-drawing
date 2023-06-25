@@ -1,10 +1,20 @@
 import Setting from "./Setting"
+import tSettingCommandGetter from "./tSettingCommandGetter"
 
-export default class Color extends Setting
+export default class Color extends Setting<string>
 {
-  public constructor( label: string, hasTrasparent = false )
+  public constructor(
+    label: string,
+    protected readonly commandGetter: tSettingCommandGetter<string>,
+    protected readonly hasTrasparent = false
+  )
   {
-    const options: Color['options'] = [
+    super( label, commandGetter )
+  }
+
+  public get options()
+  {
+    const options = [
       {
         label: 'Black',
         value: '#000',
@@ -15,7 +25,7 @@ export default class Color extends Setting
       },
     ]
 
-    if ( hasTrasparent )
+    if ( this.hasTrasparent )
     {
       options.push({
         label: 'Transparent',
@@ -23,6 +33,6 @@ export default class Color extends Setting
       })
     }
 
-    super( label, options )
+    return options
   }
 }

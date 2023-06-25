@@ -1,12 +1,23 @@
 import Setting from "./Setting"
+import tSettingCommandGetter from "./tSettingCommandGetter"
 
-export default class Size extends Setting
+export default class Size extends Setting<number>
 {
-  public constructor( label: string, from = 1, to = 10 )
+  public constructor(
+    label: string,
+    protected readonly commandGetter: tSettingCommandGetter<number>,
+    protected readonly from = 1,
+    protected readonly to = 10
+  )
   {
-    const options: Size['options'] = []
+    super( label, commandGetter )
+  }
 
-    for (let i = from; i <= to; i++)
+  public get options()
+  {
+    const options = []
+
+    for (let i = this.from; i <= this.to; i++)
     {
       options.push({
         label: String( i ),
@@ -14,6 +25,6 @@ export default class Size extends Setting
       })
     }
 
-    super( label, options )
+    return options
   }
 }

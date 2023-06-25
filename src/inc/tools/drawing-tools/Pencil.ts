@@ -1,7 +1,7 @@
-import CommandLineTo from "../../drawing/commands/path/sub-commands/CommandLineTo";
-import CommandMoveTo from "../../drawing/commands/path/sub-commands/CommandMoveTo";
-import CommandQuadraticCurveTo from "../../drawing/commands/path/sub-commands/CommandQuadraticCurveTo";
-import CommandArc from "../../drawing/commands/path/sub-commands/CommandArc";
+import CommandLineTo from "../../drawing/commands/path/CommandLineTo";
+import CommandMoveTo from "../../drawing/commands/path/CommandMoveTo";
+import CommandQuadraticCurveTo from "../../drawing/commands/path/CommandQuadraticCurveTo";
+import CommandArc from "../../drawing/commands/path/CommandArc";
 import tCoord from "../../drawing/tCoord";
 import DrawingTool from "./DrawingTool";
 
@@ -21,17 +21,11 @@ export default class Pencil extends DrawingTool
 
   protected updateCommandsOnDrawingEnd( cursorPosition: tCoord, isCursorPositionChanged: boolean )
   {
-    const subCommands = this.commands
-
     const isDot = this.lastCommand instanceof CommandMoveTo && ! isCursorPositionChanged
 
     if ( isDot )
     {
-      // todo: get from settings
-      const dotSize = 10
-
-      // todo: implement CommandArc
-      subCommands.push( new CommandArc( cursorPosition, dotSize ) )
+      this.commands.push( new CommandArc( cursorPosition, this.settings.lineWidth.selectedOption ) )
 
       return
     }
@@ -39,9 +33,9 @@ export default class Pencil extends DrawingTool
     // todo: maybe uncomment this if quadratic curve not working as expected
     // if ( ! isCursorPositionChanged )
     // {
-    //   subCommands.pop()
+    //   this.commands.pop()
     // }
 
-    subCommands.push( new CommandLineTo( cursorPosition ) )
+    this.commands.push( new CommandLineTo( cursorPosition ) )
   }
 }

@@ -1,4 +1,4 @@
-import Command from "./commands/Command"
+import CommandsSet from "./commands/CommandsSet"
 import tCoord from "./tCoord"
 
 export default class Canvas
@@ -56,9 +56,9 @@ export default class Canvas
     this.ctx.clearRect( 0, 0, this.resolution.width, this.resolution.height )
   }
 
-  public draw( command: Command )
+  public draw( commands: CommandsSet )
   {
-    command.do( this.ctx )
+    commands.do( this.ctx )
   }
 
   public setCssSize( cssMaxWidth: number, cssMaxHeight: number )

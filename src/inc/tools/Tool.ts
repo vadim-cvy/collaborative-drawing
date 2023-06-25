@@ -1,5 +1,6 @@
-import Command from "../drawing/commands/Command";
-import CoordCommand from "../drawing/commands/path/sub-commands/CoordCommand";
+import iCommand from "../drawing/commands/iCommand";
+import CommandsSet from "../drawing/commands/CommandsSet";
+import CoordCommand from "../drawing/commands/path/CoordCommand";
 import DrawingBoard from "../drawing/DrawingBoard";
 import tMouseEventType from "../drawing/mouse/tMouseEventType";
 import tCoord from "../drawing/tCoord";
@@ -20,18 +21,14 @@ export default abstract class Tool
 
   public isSelected = false
 
-  protected get wrapperCommand()
+  protected get commandsSet()
   {
-    const wrapperCommand = this.createWrapperCommandInstance()
+    const settingsCommands = Object.values( this.settings ).map( setting => setting.command )
 
-    // todo: populate with settings commands
-
-    this.commands.forEach( command => wrapperCommand.subCommands.push( command ) )
-
-    return wrapperCommand
+    return this.createCommandsSet( settingsCommands.concat( this.commands ) )
   }
 
-  protected abstract commands: Command[]
+  protected commands: iCommand[] = []
 
   protected get lastCommand()
   {
@@ -59,13 +56,13 @@ export default abstract class Tool
 
     if ( type === 'up' )
     {
-      this.drawingBoard.drawPersistant( this.wrapperCommand )
+      this.drawingBoard.drawPersistant( this.commandsSet )
 
       this.commands = []
     }
     else
     {
-      this.drawingBoard.drawTmp( this.wrapperCommand )
+      this.drawingBoard.drawTmp( this.commandsSet )
     }
   }
 
@@ -103,5 +100,5 @@ export default abstract class Tool
 
   protected abstract updateCommandsOnDrawingEnd( cursorPosition: tCoord, isCursorPositionChanged: boolean ) : void
 
-  protected abstract createWrapperCommandInstance() : Command
+  protected abstract createCommandsSet( commands: iCommand[] ) : CommandsSet
 }

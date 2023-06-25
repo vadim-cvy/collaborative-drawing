@@ -1,5 +1,5 @@
 import tCoord from "@/inc/drawing/tCoord";
-import Command from "../../Command";
+import Command from "../Command";
 
 export default abstract class CoordCommand extends Command
 {
