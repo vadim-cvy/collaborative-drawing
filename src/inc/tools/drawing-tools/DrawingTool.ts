@@ -18,9 +18,9 @@ export default abstract class DrawingTool extends Tool
       1, 10 ),
   }
 
-  protected createCommandsSet( commands: iCommand[] )
+  protected createCommandsSetInstance()
   {
-    return new PathCommandsSet( commands )
+    return new PathCommandsSet()
   }
 
   protected updateCommandsOnDrawingStart( cursorPosition: tCoord )

@@ -21,11 +21,17 @@ export default abstract class Tool
 
   public isSelected = false
 
+  protected isDrawing = false
+
   protected get commandsSet()
   {
-    const settingsCommands = Object.values( this.settings ).map( setting => setting.command )
+    const commandsSet = this.createCommandsSetInstance()
 
-    return this.createCommandsSet( settingsCommands.concat( this.commands ) )
+    Object.values( this.settings ).forEach( setting => commandsSet.commands.push( setting.command ) )
+
+    this.commands.forEach( command => commandsSet.commands.push( command ) )
+
+    return commandsSet
   }
 
   protected commands: iCommand[] = []
@@ -70,19 +76,32 @@ export default abstract class Tool
   {
     if ( type === 'down' )
     {
+      this.isDrawing = true
+
       this.updateCommandsOnDrawingStart( cursorPosition )
 
       return
     }
 
+    if ( ! this.isDrawing )
+    {
+      return
+    }
+
+    if ( ! this.lastCoord )
+    {
+      throw new Error( 'Last coord cant be missed as drawing is started already.' )
+    }
+
     const isCursorPositionChanged =
-      this.lastCoord &&
       this.lastCoord.x !== cursorPosition.x &&
       this.lastCoord.y !== cursorPosition.y
 
     if ( type === 'up' )
     {
       this.updateCommandsOnDrawingEnd( cursorPosition, isCursorPositionChanged )
+
+      this.isDrawing = false
     }
     else if ( isCursorPositionChanged )
     {
@@ -96,5 +115,5 @@ export default abstract class Tool
 
   protected abstract updateCommandsOnDrawingEnd( cursorPosition: tCoord, isCursorPositionChanged: boolean ) : void
 
-  protected abstract createCommandsSet( commands: iCommand[] ) : CommandsSet
+  protected abstract createCommandsSetInstance() : CommandsSet
 }
