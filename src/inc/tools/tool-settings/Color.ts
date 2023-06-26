@@ -14,25 +14,21 @@ export default class Color extends Setting<string>
 
   public get options()
   {
-    const options = [
-      {
-        label: 'Black',
-        value: '#000',
-      },
-      {
-        label: 'White',
-        value: '#fff',
-      },
+    const colors = [
+      '#000',
+      'red',
+      'yellow',
+      '#fff',
     ]
 
     if ( this.hasTrasparent )
     {
-      options.push({
-        label: 'Transparent',
-        value: 'transparent',
-      })
+      colors.push( 'transparent' )
     }
 
-    return options
+    return colors.map( color => ({
+      label: color,
+      value: color,
+    }))
   }
 }
