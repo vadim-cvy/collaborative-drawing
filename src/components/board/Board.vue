@@ -29,8 +29,25 @@ onMounted(() =>
 </script>
 
 <template>
-  <section>
-    <canvas ref="underlyingCanvasElement"></canvas>
-    <canvas ref="topCanvasElement"></canvas>
+  <section class="board">
+    <canvas ref="underlyingCanvasElement" class="board__canvas"></canvas>
+    <canvas ref="topCanvasElement" class="board__canvas"></canvas>
   </section>
 </template>
+
+<style lang="scss">
+.board
+{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  &__canvas
+  {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+  }
+}
+</style>

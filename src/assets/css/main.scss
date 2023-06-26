@@ -1,0 +1,51 @@
+:root
+{
+  --accent-color: #521a4a;
+}
+
+html
+{
+  height: 100%;
+}
+
+body
+{
+  height: 100%;
+  margin: 0;
+  background-color: #929292;
+  color: #fff;
+  font-size: 17px;
+}
+
+h1,
+ul,
+p
+{
+  margin: 0;
+}
+
+h1
+{
+  font-size: 1.2em;
+}
+
+ul
+{
+  padding: 0;
+  list-style: none;
+}
+
+a
+{
+  color: inherit;
+}
+
+label
+{
+  cursor: pointer;
+}
+
+#app
+{
+  height: 100%;
+}

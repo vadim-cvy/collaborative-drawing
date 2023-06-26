@@ -12,7 +12,7 @@ export default class Canvas
 
     this.syncCssSize()
 
-    window.onresize = () => this.syncCssSize()
+    this.listenParentElementResize()
   }
 
   protected get parentElement()
@@ -54,7 +54,7 @@ export default class Canvas
         cssMaxHeight / this.resolution.height :
         cssMaxWidth / this.resolution.width
 
-      this._cssSizeScale = Number( cssSizeScale.toFixed( 2 ) )
+      this._cssSizeScale = Number( cssSizeScale.toFixed( 10 ) )
     }
 
     return this._cssSizeScale
@@ -82,8 +82,16 @@ export default class Canvas
     commands.do( this.ctx )
   }
 
+  protected listenParentElementResize()
+  {
+    const observer = new ResizeObserver( () => this.syncCssSize() )
+
+    observer.observe( this.parentElement )
+  }
+
   protected syncCssSize()
   {
+    console.log( this.parentElement.offsetWidth, this.parentElement.offsetHeight )
     this.resetCssSizeScale()
 
     this.element.style.width = this.resolution.width * this.cssSizeScale + 'px'
