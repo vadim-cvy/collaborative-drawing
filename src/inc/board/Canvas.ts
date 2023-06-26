@@ -104,9 +104,11 @@ export default class Canvas
 
   public getCursorRelativeCoord( originalMouseCoord: tCoord ) : tCoord
   {
+    const rect = this.element.getBoundingClientRect()
+
     return {
-      x: ( originalMouseCoord.x - this.element.offsetLeft ) * this.cssSizeScale,
-      y: ( originalMouseCoord.y - this.element.offsetTop ) * this.cssSizeScale,
+      x: ( originalMouseCoord.x - rect.left ) / this.cssSizeScale,
+      y: ( originalMouseCoord.y - rect.top ) / this.cssSizeScale,
     }
   }
 }
