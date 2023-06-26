@@ -94,7 +94,7 @@ export default abstract class Tool
     }
 
     const isCursorPositionChanged =
-      this.lastCoord.x !== cursorPosition.x &&
+      this.lastCoord.x !== cursorPosition.x ||
       this.lastCoord.y !== cursorPosition.y
 
     if ( type === 'up' )
