@@ -4,6 +4,7 @@ import Pencil from '@/inc/tools/drawing-tools/Pencil';
 import Line from '@/inc/tools/drawing-tools/shape-tools/Line';
 import Tool from '@/inc/tools/Tool';
 import { ref, watch } from 'vue';
+import ActiveToolSettings from './active-tool-settings/ActiveToolSettings.vue';
 
 const props = defineProps<{
   drawingBoard: DrawingBoard
@@ -39,42 +40,15 @@ watch( activeTool,
           :key="i"
           @click="activeTool = tool"
           :class="{
-            tools__item: true,
-            tools__item_active: activeTool.label === tool.label,
+            tool: true,
+            tool_active: activeTool.label === tool.label,
           }"
         >
           {{ tool.label }}
         </li>
       </ul>
 
-      <ul class="tools__active-tool-settings">
-        <li
-          v-for="(setting, settingKey) in activeTool.settings"
-          :key="setting.label"
-          class="tools__active-tool-settings__setting"
-        >
-          <label
-            class="tools__active-tool-settings__setting__label"
-            :for="'tools__active-tool-settings__setting__input_' + settingKey"
-          >
-            {{ setting.label }}
-          </label>
-
-          <select
-            v-model="setting.selectedOptionIndex"
-            class="tools__active-tool-settings__setting__input"
-            :id="'tools__active-tool-settings__setting__input_' + settingKey"
-          >
-            <option
-              v-for="(option, i) in setting.options"
-              :key="i"
-              :value="i"
-            >
-              {{ option.label }}
-            </option>
-          </select>
-        </li>
-      </ul>
+      <ActiveToolSettings v-if="activeTool" :active-tool="activeTool"></ActiveToolSettings>
     </div>
   </section>
 </template>
@@ -85,50 +59,29 @@ watch( activeTool,
   min-width: 4em;
   padding: .5em 0 1em;
 
-  .wrapper
+  & > .wrapper
   {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
   }
+}
 
-  &__item
+.tool
+{
+  margin-bottom: .5em;
+  cursor: pointer;
+
+  &:last-child
   {
-    margin-bottom: .5em;
-    cursor: pointer;
-
-    &:last-child
-    {
-      margin-bottom: 0;
-    }
-
-    &:hover,
-    &_active
-    {
-      color: var(--accent-color);
-    }
+    margin-bottom: 0;
   }
 
-  &__active-tool-settings__setting
+  &:hover,
+  &_active
   {
-    margin-bottom: .5em;
-
-    &:last-child
-    {
-      margin-bottom: 0;
-    }
-
-    &__label
-    {
-      display: block;
-      margin-bottom: .2em;
-    }
-
-    &__input
-    {
-      width: 100%;
-    }
+    color: var(--accent-color);
   }
 }
 </style>

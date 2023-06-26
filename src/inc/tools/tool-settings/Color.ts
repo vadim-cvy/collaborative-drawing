@@ -21,7 +21,7 @@ export default class Color extends Setting<string>
       },
       {
         label: 'White',
-        value: '#000',
+        value: '#fff',
       },
     ]
 

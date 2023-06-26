@@ -30,8 +30,8 @@ onMounted(() =>
 
 <template>
   <section class="board">
-    <canvas ref="underlyingCanvasElement" class="board__canvas"></canvas>
-    <canvas ref="topCanvasElement" class="board__canvas"></canvas>
+    <canvas ref="underlyingCanvasElement"></canvas>
+    <canvas ref="topCanvasElement"></canvas>
   </section>
 </template>
 
@@ -42,7 +42,7 @@ onMounted(() =>
   width: 100%;
   overflow: hidden;
 
-  &__canvas
+  canvas
   {
     position: absolute;
     left: 0;

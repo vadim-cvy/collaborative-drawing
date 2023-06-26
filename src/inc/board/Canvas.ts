@@ -91,7 +91,6 @@ export default class Canvas
 
   protected syncCssSize()
   {
-    console.log( this.parentElement.offsetWidth, this.parentElement.offsetHeight )
     this.resetCssSizeScale()
 
     this.element.style.width = this.resolution.width * this.cssSizeScale + 'px'
