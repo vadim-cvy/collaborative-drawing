@@ -75,12 +75,8 @@ export default abstract class Tool
       return
     }
 
-    if ( ! this.lastCoord )
-    {
-      throw new Error( 'Something goes wrong!' )
-    }
-
     const isCursorPositionChanged =
+      this.lastCoord &&
       this.lastCoord.x !== cursorPosition.x &&
       this.lastCoord.y !== cursorPosition.y
 
