@@ -11,11 +11,16 @@ import iCommand from "@/inc/board/commands/iCommand";
 // todo (future): create TransformerTool
 export default abstract class DrawingTool extends Tool
 {
-  public readonly settings = {
+  protected static readonly sharedSettings = {
     strokeStlye: new Color( 'Color', selectedColor => new CommandStrokeStyle( selectedColor ) ),
 
     lineWidth: new Size( 'Size', selectedWidth => new CommandLineWidth( selectedWidth ),
       1, 10 ),
+  }
+
+  public get settings()
+  {
+    return DrawingTool.sharedSettings
   }
 
   protected createCommandsSetInstance()
