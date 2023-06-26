@@ -1,7 +1,7 @@
 import Setting from "./Setting"
 
 type tSettings = {
-  [key: string]: Setting,
+  [key: string]: Setting<any>,
 }
 
 export default tSettings

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import DrawingBoard from '@/inc/drawing/DrawingBoard';
-import Line from '@/inc/tools/Line';
-import Pencil from '@/inc/tools/Pencil';
+import DrawingBoard from '@/inc/board/DrawingBoard';
+import Pencil from '@/inc/tools/drawing-tools/Pencil';
+import Line from '@/inc/tools/drawing-tools/shape-tools/Line';
 import Tool from '@/inc/tools/Tool';
 import { ref, watch } from 'vue';
 
@@ -46,7 +46,7 @@ watch( activeTool,
       <li v-for="setting in activeTool.settings" :key="setting.label">
         {{ setting.label }}
 
-        <select v-model="setting.selectedOption">
+        <select v-model="setting.selectedOptionIndex">
           <option
             v-for="(option, i) in setting.options"
             :key="i"

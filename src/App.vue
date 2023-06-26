@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import Tools from '@/components/tools/Tools.vue';
 import Board from '@/components/board/Board.vue';
-import DrawingBoard from './inc/drawing/DrawingBoard';
 import { ref } from 'vue';
+import DrawingBoard from './inc/board/DrawingBoard';
 
 const drawingBoard = ref<DrawingBoard>()
 </script>

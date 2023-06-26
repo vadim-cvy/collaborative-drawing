@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DrawingBoard from '@/inc/drawing/DrawingBoard';
-import { onMounted, ref, watch } from 'vue';
+import DrawingBoard from '@/inc/board/DrawingBoard';
+import { onMounted, ref } from 'vue';
 
 const emit = defineEmits<{
   (e: 'drawingBoardInited', drawingBoard: DrawingBoard): void
