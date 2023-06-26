@@ -39,6 +39,7 @@ const
           }"
           :style="{
             backgroundColor: option.value,
+            color: option.value,
           }"
           @click="setting.selectedOptionIndex = optionIndex"
         ></li>
@@ -100,12 +101,13 @@ const
         $border-width: 2px;
 
         padding-top: calc( 100% - $border-width * 2 );
+        border: $border-width solid currentColor;
         cursor: pointer;
 
         &:hover,
         &_active
         {
-          border: $border-width solid var(--accent-color);
+          border-color: var(--accent-color);
         }
       }
     }
