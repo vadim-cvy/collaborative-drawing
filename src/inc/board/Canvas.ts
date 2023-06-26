@@ -9,6 +9,22 @@ export default class Canvas
   {
     element.width = this.resolution.width
     element.height = this.resolution.height
+
+    this.syncCssSize()
+
+    window.onresize = () => this.syncCssSize()
+  }
+
+  protected get parentElement()
+  {
+    const parentElement = this.element.parentElement
+
+    if ( ! parentElement )
+    {
+      throw new Error( 'Can\'t get parent element' )
+    }
+
+    return parentElement
   }
 
   protected readonly resolution: Readonly<{
@@ -25,18 +41,23 @@ export default class Canvas
   {
     if ( ! this._cssSizeScale )
     {
-      throw new Error( 'Value is not set yet!' )
+      const
+        cssMaxWidth = this.parentElement.offsetWidth,
+        cssMaxHeight = this.parentElement.offsetHeight
+
+      const
+        resolutionRatio = this.resolution.width / this.resolution.height,
+        cssAvailableSpaceRatio = cssMaxWidth / cssMaxHeight
+
+      const cssSizeScale =
+        resolutionRatio <= cssAvailableSpaceRatio ?
+        cssMaxHeight / this.resolution.height :
+        cssMaxWidth / this.resolution.width
+
+      this._cssSizeScale = Number( cssSizeScale.toFixed( 2 ) )
     }
 
     return this._cssSizeScale
-  }
-
-  protected set cssSizeScale( value )
-  {
-    this._cssSizeScale = value
-
-    this.element.style.width = this.resolution.width * value + 'px'
-    this.element.style.height = this.resolution.height * value + 'px'
   }
 
   protected get ctx()
@@ -61,18 +82,17 @@ export default class Canvas
     commands.do( this.ctx )
   }
 
-  public setCssSize( cssMaxWidth: number, cssMaxHeight: number )
+  protected syncCssSize()
   {
-    const
-      resolutionRatio = this.resolution.width / this.resolution.height,
-      cssAvailableSpaceRatio = cssMaxWidth / cssMaxHeight
+    this.resetCssSizeScale()
 
-    const cssSizeScale =
-      resolutionRatio <= cssAvailableSpaceRatio ?
-      cssMaxHeight / this.resolution.height :
-      cssMaxWidth / this.resolution.width
+    this.element.style.width = this.resolution.width * this.cssSizeScale + 'px'
+    this.element.style.height = this.resolution.height * this.cssSizeScale + 'px'
+  }
 
-    this.cssSizeScale = Number( cssSizeScale.toFixed( 2 ) )
+  protected resetCssSizeScale()
+  {
+    this._cssSizeScale = undefined
   }
 
   public getCursorRelativeCoord( originalMouseCoord: tCoord ) : tCoord
